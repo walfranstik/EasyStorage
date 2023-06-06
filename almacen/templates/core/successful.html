@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+{% trans 'successful' %}
+{% endblock title%}
+
+{% block extra_css %}
+<style>
+        .card {
+          background-color: #fff;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+          border-radius: 10px;
+        }
+        
+        .btn-primary {
+          background-color: {{settings.primarycolor_page}};
+          border-color: {{settings.primarycolor_page}};
+        }
+        
+        .btn-primary:hover {
+          background-color: {{settings.secundarycolor_page}};
+          border-color: {{settings.secundarycolor_page}};
+        }
+        
+        img {
+          max-width: 80px;
+          max-height: 80px;
+        }
+    </style>
+{% endblock extra_css %}
+{% block content_page %}
+{% include 'core/components/nav_bar.html' %}
+<div class="section-header mb-3 ">
+  <h2 class="section-heading text-center">{% trans 'Successful' %}</h2>
+</div>
+
+<div class="checkout-progress overflow-hidden d-flex align-items-center">
+  <ol class="checkout-bar list-unstyled d-flex justify-content-center mb-0">
+      <li class="progress-step step-done"><a>{% trans 'Cart' %}</a></li>
+      <li class="progress-step step-done"><a>{% trans 'Your Details' %}</a></li>
+      <li class="progress-step step-active"><a>{% trans 'successful' %}</a></li>
+  </ol>
+</div>
+
+<section class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="card p-5 text-center">
+            <img src="{% static 'assets/img/successful.png' %}" alt="Ícono de éxito" class="mb-4 d-block mx-auto">
+            <h1 class="mb-3">{% trans '¡Thanks for your purchase!' %}</h1>
+            <p class="text-muted mb-4">{% trans 'We are processing your order and will send you an email confirmation shortly.' %}</p>
+            <a href="{% url 'almacen:dashboard' %}" class="btn btn-lg btn-primary">{% trans 'Volver a la página principal' %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content_page %}
+
+{% block extra_js %}
+<script>
+    $('.header-action-item').empty()
+    $('.icon-search').empty()
+</script>
+{% endblock %}

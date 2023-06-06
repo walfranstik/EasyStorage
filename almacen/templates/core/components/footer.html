@@ -1,0 +1,89 @@
+{% load static i18n %}
+
+      <!-- footer start -->
+        <footer class="mt-100 overflow-hidden">
+            <div class=" bg-4">
+                <div class="container">
+                    <div class="footer-widget-wrapper">
+                        <div class="row justify-content-between">
+                            <div class="col-xl-2 col-lg-2 col-md-6 col-12 footer-widget">
+                                <div class="footer-widget-inner">
+                                    <h4 class="footer-heading d-flex align-items-center justify-content-between" style="margin: 50% 0 50% 0 ;">
+                                        <span>{% trans 'About' %}</span>
+                                        <span class="d-md-none">
+                                            <svg class="icon icon-dropdown" xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>
+                                        </span>
+                                    </h4>
+                                  
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-6 col-12 footer-widget">
+                                <div class="footer-widget-inner">
+                                    <h4 class="footer-heading d-flex align-items-center justify-content-between" style="margin: 50% 0 50% 0 ;" >
+                                        <span>{% trans 'Shopping' %}</span>
+                                        <span class="d-md-none">
+                                            <svg class="icon icon-dropdown" xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>
+                                        </span>
+                                    </h4>
+                                 
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-6 col-12 footer-widget">
+                                <div class="footer-widget-inner">
+                                    <h4 class="footer-heading d-flex align-items-center justify-content-between" style="margin: 50% 0 50% 0 ;">
+                                        <span>{% trans 'Help' %}</span>
+                                        <span class="d-md-none">
+                                            <svg class="icon icon-dropdown" xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff"
+                                                stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                            </svg>
+                                        </span>
+                                    </h4>
+                             
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-5 col-md-6 col-12 footer-widget">
+                                <div class="footer-widget-inner">
+                                    <h4 class="footer-logo d-flex justify-content-center align-items-center" style="margin: 8px 0 1px 0;">
+                                        <a href=""><img src="{{ settings.logo.url }}" alt="GainUp." width="120" height="80"></a>
+                                    </h4>
+                                    <div class="footer-newsletter">
+                                        <p class="footer-text mb-3 d-flex justify-content-center align-items-center">{% trans 'Stay up to date with all the news.' %}</p>
+                                        <div class="newsletter-wrapper">
+                                            <form action="#" class="footer-newsletter-form d-flex align-items-center" style="margin: 10px 0 10px 0 ;">
+                                                <input class="footer-newsletter-input bg-transparent" type="email"
+                                                    placeholder="Your e-mail" autocomplete="off">
+                                                <button class="footer-newsletter-btn newsletter-btn-white"
+                                                    type="submit">{% trans 'SIGN UP' %}</button>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom bg-4">
+                <div class="container">
+                    <div
+                        class="footer-bottom-inner d-flex flex-wrap justify-content-md-between justify-content-center align-items-center">
+                        <ul class="footer-bottom-menu list-unstyled d-flex flex-wrap align-items-center mb-0">
+                            <li class="footer-menu-item"><a href="">{% trans 'Privacy policy' %}</a></li>
+                            <li class="footer-menu-item"><a href="">{% trans 'Terms & Conditions' %}</a></li>
+                        </ul>
+                        <p class="copyright footer-text">©<span class="current-year"></span>{% trans ' GainUp.' %}</p>
+                    </div>
+                </div>
+            </div>
+        </footer>

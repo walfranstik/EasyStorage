@@ -1,0 +1,37 @@
+{% load tag_multipli %}
+
+{% load static i18n %}
+{% for product in products_list  %}
+{% if forloop.first %}
+    <tr class="table-dark text-center">
+      <th scope="col" >{% trans "Product Image" %}</th>
+      <th scope="col">{% trans "Product Name" %}</th>
+      <th scope="col">{% trans "Amount" %}</th>
+      <th scope="col">{% trans "Total Price" %}</th>
+      <th scope="col">{% trans "Type Wallet" %}</th>
+      <th scope="col">Details</th>
+    </tr>
+
+{% endif %}
+{% if product.id in producsShopping.keys %}
+ <tr>
+    
+    <td class="col-2">{% with first_image=product.images.first %}
+            {% if first_image %}
+                <img class="primary-img" src=" {{first_image.image.url}}" with='220' height='200' alt="product-img">
+            {% endif %}
+        {% endwith %}
+    </td>
+    <td class="col-2 text-center">{{product.name_product}}</td>
+
+  {% for keys,values in producsShopping.items %}
+    {% if keys == product.id %}
+    <td class="col-2 text-center">{{values}}</td>
+    <td class="col-2 text-center">{{ product.price_product|multipli:values|floatformat:2 }}</td>
+    {% endif %}
+  {% endfor %}
+
+     <td class="col-2 text-center">{{typePay}}</td>
+</tr>
+{% endif %}
+{% endfor %}

@@ -1,0 +1,51 @@
+{% load static %}
+{% load static i18n %}
+
+            <div class="minicart-loop custom-scrollbar" >
+                                
+                <!-- minicart item -->
+                {% for product_id, product_data in cart.items  %}
+
+                    <div class="minicart-item d-flex">
+                        <div class="mini-img-wrapper">
+                            <img class="mini-img" src="{{product_data.image}}" alt="img">
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-title"><a href="#">{{product_data.name}}</a></h2>
+                            
+                            <div class="misc d-flex align-items-end justify-content-between">
+                            <div class="quantity d-flex align-items-center justify-content-between">
+                                <button onclick="drop_shopping('{{product_id}}');decrement('{{ product_id }}');" class="qty-btn dec-qty"><img src="{% static 'assets/img/icon/minus.svg' %} "
+                                        alt="minus"></button>
+                                
+                                <input id="qty{{product_id}}" class="qty-input" readonly type="number" name="qty" value="{{product_data.quantity}}" min="1">
+                                <button onclick="shopping('{{product_id}}');increment('{{ product_id }}');" class="qty-btn inc-qty"><img src="{% static 'assets/img/icon/plus.svg' %} "
+                                        alt="plus"></button>
+                            </div>
+                            {% for id, item in sub_total_price.items %}
+                            {% if id == product_id %}
+                            <div class="product-remove-area d-flex flex-column align-items-end">
+                                <div class="product-price">${{item|floatformat:2}}</div>
+                                <a href="#" onclick="delete_shopping('{{product_id}}')" class="product-remove">{% trans 'Remove' %}</a>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+                    
+                <div class="minicart-footer">
+                    <div class="minicart-calc-area">
+                        <div class="minicart-calc d-flex align-items-center justify-content-between">
+                            <span class="cart-subtotal mb-0">{% trans 'SubTotal' %}</span>
+                            <span class="cart-subprice">${{total_price|floatformat:2}}</span>
+                        </div>
+                    </div>
+                    <div class="minicart-btn-area d-flex align-items-center justify-content-between">
+                        <a href="{% url 'almacen:checkout' %}" onclick="open_fullcart()" class="minicart-btn btn-secondary" style="width:360px;">{% trans 'create sale' %}</a>
+                    </div>
+                </div>
+           

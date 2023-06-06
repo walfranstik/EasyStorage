@@ -1,0 +1,143 @@
+{% extends 'panel/base.html' %}
+{% load static i18n %}
+{% load discount_percentage %}
+{% load int_custom_filters %}
+
+{% block title %}
+{% trans 'GainUp Canna Ecomemrce Admin' %}
+{% endblock title%}
+
+{% block extra_css %}
+<style>
+    select {
+      font-size: 16px;
+      padding: 8px;
+      width: 100%;
+      border: none;
+      border-radius: 4px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+      background-color: #FFFFFF;
+      color: #333333;
+    }
+  
+    
+    
+    /* Estilo para el hover del select */
+    select:hover {
+      background-color: {{settings.primarycolor_page}};
+      color: white;
+      opacity: 0.65;
+      
+    }
+    
+    /* Estilo para el foco del select */
+    select:focus {
+      outline: none;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.2), 0 0 0 2px #7FB2F0;
+    }
+    
+    /* Estilo para las opciones */
+    option {
+      font-size: 16px;
+      padding: 8px;
+      background-color: #FFFFFF;
+      color: #333333;
+    }
+    
+    
+    
+    /* Estilo para la flecha del select */
+    select::-ms-expand {
+      display: none;
+    }
+    
+    select::-webkit-select-arrow {
+      display: none;
+    }
+</style>
+<style>
+
+    h1 {
+      font-size: 48px;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      opacity: 0.6;
+    }
+
+</style>
+{% endblock extra_css %}
+{% block content_page %}
+<div class="col-12 text-center">                
+    <h1>{% trans "Profit Graph" %}</h1>
+    <select onchange="timeinterval({{product.id}})" id="timeinterval" class="form-control text-center">
+        <option>{% trans 'select a time interval' %}</option>
+        <option   value="week">{% trans 'this week' %}</option>
+        <option   value="month">{% trans 'this month' %}</option>
+        <option   value="year">{% trans 'this year' %}</option>
+
+        
+    </select>
+</div>
+<div id="admin_graph" class="image-container text-center">
+
+
+
+</div>
+
+{% endblock content_page %}
+
+{% block extra_js %}
+<!--boton de redireccion-->
+<script>
+    $('#linknavbar').append(`
+    <nav class="site-navigation">
+        <ul class="main-menu list-unstyled justify-content-center">
+            <li class="linkblock menu-list-item nav-item has-dropdown active" style="border-bottom : none;">
+                <div class="mega-menu-header">
+                    <a class="linkredirec" href="{% url 'admin_ecommerce:index' %}">
+                        {% trans 'Home' %} 
+                    </a>
+                </div>
+            </li>
+            <li class="linkblock menu-list-item nav-item has-dropdown active" style="border-bottom : none;">
+              <div class="mega-menu-header">
+                  <a class="linkredirec" href="{% url 'admin_ecommerce:transactionsadmin' %}">
+                      {% trans 'Transaction Admin' %} 
+                  </a>
+              </div>
+          </li>
+        </ul>
+    </nav>
+        `);
+
+</script>
+<!--graficadora-->
+<script>
+    var URl_graph_product = "{% url 'admin_ecommerce:graphics_statistics'%}"
+
+    function timeinterval(id_product){
+        var timeinterval=$('#timeinterval').val()
+    console.log(timeinterval)
+        fetch(URl_graph_product+'?timeinterval='+timeinterval).then(response => response.json()).then(
+            response => {
+            console.log(response)
+                $('#admin_graph').empty()
+
+                var image = new Image();
+                image.src = 'data:image/png;base64,' + response.image;
+                
+                $('#admin_graph').append(image)
+
+
+            })     
+            }
+
+</script>
+
+
+{% endblock extra_js %}

@@ -1,0 +1,106 @@
+<!-- product quickview start -->
+{% load static i18n %}
+<div class="modal fade" tabindex="-1" id="quickview-modal">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-12">
+                        <div class="product-gallery product-gallery-vertical d-flex">
+                            <div class="product-img-large">
+                                <div class="qv-large-slider img-large-slider common-slider" data-slick='{
+                                    "slidesToShow": 1, 
+                                    "slidesToScroll": 1,
+                                    "dots": false,
+                                    "arrows": false,
+                                    "asNavFor": ".qv-thumb-slider"
+                                }'>
+                                {% for image in product.images.all %}
+                                    <div class="img-large-wrapper">
+                                        <img src="{{image.image.url}}" alt="img">
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="product-img-thumb">
+                                <div class="qv-thumb-slider img-thumb-slider common-slider" data-vertical-slider="true" data-slick='{
+                                    "slidesToShow": 5,
+                                    "slidesToScroll": 1,
+                                    "dots": false,
+                                    "arrows": true,
+                                    "infinite": false,
+                                    "speed": 300,
+                                    "cssEase": "ease",
+                                    "focusOnSelect": true,
+                                    "swipeToSlide": true,
+                                    "asNavFor": ".qv-large-slider"
+                                }'>
+                                {% for image in product.images.all %}
+                                    <div>
+                                        <div class="img-thumb-wrapper">
+                                            <img src="{{image.image.url}}" alt="img">
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="activate-arrows show-arrows-always arrows-white d-none d-lg-flex justify-content-between mt-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-12">
+                        <div class="product-details ps-lg-4">
+                            <div class="mb-3"><span class="product-availability">{% trans 'In Stock' %}</span></div>
+                            <h2 class="product-title mb-3">{{product.name_product}}</h2>
+                            <div class="product-rating d-flex align-items-center mb-3">
+                               
+                                <span class="product-price regular-price"><strong  style="color: var(--secondary-color);">{% trans 'quantity sold:' %}</strong> {{cantProducts}}</span>
+                                
+                                <span class="product-price regular-price"><strong  style="color: var(--secondary-color);">{% trans 'total amount:' %}</strong> {{total_amount|floatformat:2}}</span>
+                                
+                            </div>
+                            <div class="product-price-wrapper mb-4">
+                                <span class="product-price regular-price">${{product.price_product|floatformat:2}}</span>
+                            </div>
+                            <div class="product-sku product-meta mb-1">
+                                <strong class="label">{% trans 'Reference:' %}</strong> {{product.reference_product}}
+                            </div>
+                            <div class="product-vendor product-meta mb-3">
+                                <strong class="label">{% trans 'Description:' %}</strong> {{product.description_product}}
+                            </div>
+                            <div class="col-12">
+
+                                
+
+                                <label class="label">{% trans 'select a time interval' %}</label>
+                                <select onchange="timeinterval({{product.id}})" id="timeinterval" class="form-control">
+                                    <option>{% trans 'select an option' %}</option>
+
+                                    <option   value="week">{% trans 'this week' %}</option>
+                                    <option   value="month">{% trans 'this month' %}</option>
+
+                                    
+                                </select>
+                            </div>
+
+                            
+
+
+                               
+                        </div>
+                        
+                    </div>
+                    <div id="product_graph" class="col-12 col-md-10 col-lg-9 mx-auto">
+
+
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- product quickview end -->

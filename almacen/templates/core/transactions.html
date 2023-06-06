@@ -1,0 +1,168 @@
+{% extends 'core/base.html' %}
+{% load static i18n %}
+{% load discount_percentage %}
+{% load int_custom_filters %}
+
+{% block title %}
+{% trans 'EasyStorage Admin' %}
+{% endblock title%}
+
+{% block extra_css %}
+<style>
+    h1 {
+        font-size: 48px;
+        font-weight: bold;
+        color: var(--primary-color);
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        opacity: 0.6;
+      }
+  </style>
+{% endblock extra_css %}
+{% block content_page %}
+{% include 'core/components/nav_bar.html' %}
+<div id="tablecontent" class="col-10 mx-auto">
+    <h1>{% trans "Transaction Table" %}</h1>
+    <table class="table table-light ">
+        <caption>Lista de usuarios</caption>
+        <thead>
+        <tr class=" text-center">
+            <th scope="col">id</th>
+            <th scope="col">Buyer</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Transaction Status</th>
+            <th scope="col">Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for transaction in page_obj.object_list  %}
+        <tr class=" text-center">
+            <th scope="row">{{transaction.id}}</th>
+            <td>{{transaction.first_name}} {{transaction.last_name}}</td>
+            {% for keys,values in cantproduct.items %}
+            {% if keys == transaction.id %}
+            <td>{{values}}</td>
+            {% endif %}
+            
+            {% endfor %}
+            <td>{{transaction.total_amount|floatformat:2}}</td>
+            <td class=" {% if transaction.status == 'rejected' %}table-danger {% elif transaction.status == 'approved' %} table-success {% elif transaction.status == 'waiting_for_approval' %} table-warning {% endif %} ">{{transaction.status}}</td>
+            <td class="col-3"><p id="informationtransaction" href="" class="checkout-page-btn minicart-btn btn-secondary" onclick="informationtransaction({{transaction.id}})" style="width: auto; opacity: 0.7; cursor: pointer;">{% trans 'Information' %}</p></td>
+        </tr>
+        <tr class="details{{transaction.id}} d-none" >
+            <td colspan="6">
+                <table class="table table-light">
+                    <tbody id="details{{transaction.id}}"></tbody>
+                </table>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<!-- muestra el paginador -->
+{% if page_obj.has_other_pages %}
+<div class="pagination justify-content-center mt-100">
+    <nav>
+    <ul class="pagination m-0 d-flex align-items-center">
+        {% if page_obj.has_previous %}
+            <li class="item disabled"><a class="link" href="?page={{ page_obj.previous_page_number }}"> <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-left">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg></a></li>
+
+
+        {% else %}
+            <li class="item"><a class="link" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-left">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg></a></li>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="item"><a class="link" href="#">{{ num }} <span class="sr-only">{% trans '(current)' %}</span></a></li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="item"><a class="link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li class="item"><a class="link" href="?page={{ page_obj.next_page_number }}"><svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg></a></li>
+        {% else %}
+            <li class="item"><a class="link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-right">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg></a></li>
+        {% endif %}
+    </ul>
+</nav>
+</div>
+{% endif %}
+
+
+
+
+{% endblock content_page %}
+
+{% block extra_js %}
+<!--boton de redireccion-->
+<!--boton de redireccion-->
+
+<!--information transaction-->
+<script>
+    var URL_information_transaction="{% url 'almacen:detailventas' %}";
+    function informationtransaction(idtransaction){
+        
+        if ($('#details'+idtransaction).text()){
+            $('#details'+idtransaction).empty();
+            $('.details'+idtransaction).addClass('d-none');
+
+        }
+        else{
+            $('.details'+idtransaction).removeClass('d-none');
+            fetch(URL_information_transaction+"?idtransaction="+idtransaction).then(response=> response.text()).then(
+                response=>{
+                    $('#details'+idtransaction).empty();
+                    
+                    $('#details' + idtransaction)
+                    .css({
+                        opacity: 0.8,
+                        height: 0
+                    })
+                    .hide()
+                    .append(response)
+                    .slideDown(200)
+                    .animate({
+                        opacity: 1,
+                        height: 'auto'
+                    }, 550);
+
+                
+                    
+                });
+        }
+        
+
+    }
+</script>
+
+
+{% endblock extra_js %}
