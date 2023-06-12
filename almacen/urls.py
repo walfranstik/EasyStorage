@@ -3,7 +3,7 @@ from rest_framework import routers
 from .views import DashboardView,ModalProductView,AddCanvasShoppingCart,DropShoppingCart,CartView,\
     DeleteCartView,CheckoutView,CreateTransactionView,SuccessfulView,ErrorView,DeliveryView,\
     InventarioAlert,IndexAdminView,TransacitonAdminView,DetailVentasView,AdminProductView,\
-    AdminGraphicsView,GraphProductView,GraphicsStatistView,TransacitonAdminViewad
+    AdminGraphicsView,GraphProductView,GraphicsStatistView,TransacitonAdminViewad,custom_login
 from django.contrib.auth.views import LoginView, LogoutView
 
 app_name = 'almacen'
@@ -25,7 +25,7 @@ urlpatterns = [
     path('graphicsstatistics/',GraphicsStatistView.as_view(),name="graphics_statistics"),#graficadora del template de estadisticas
 
     path('alert/', InventarioAlert.as_view(), name='alert'),
-    path('login/', LoginView.as_view(template_name='core/login.html'), name='login'),
+    path('login/', custom_login, name='login'),
 	path('logout/',LogoutView.as_view(), name='logout'),
     path('get-product-modal/', ModalProductView.as_view(), name='get_product_modal'),
     path('add-shopping-cart/',AddCanvasShoppingCart.as_view(), name='add-shopping-cart'),

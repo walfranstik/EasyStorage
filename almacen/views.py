@@ -15,17 +15,30 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import base64
 import io
+from django.contrib.auth import login
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import AuthenticationForm
 
+def custom_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            if user.is_superuser:
+                return redirect('admin:index')
+            else:
+                return redirect('almacen:dashboard')
+    else:
+        form = AuthenticationForm(request)
 
-
-def test_func(request):
-        print('lllllllll')
-        print(request.user.is_superuser)
-        return request.user.is_superuser
+    context = {
+        'form': form,
+    }
+    return render(request, 'core/login.html', context)
 
 @method_decorator(login_required, name='dispatch')
 class DashboardView(ListView):
-   
 
     template_name = 'core/dashboard_base.html'
     model = ProductInformation
@@ -78,8 +91,7 @@ class DeleteCartView(View):
         cart = request.session.get('cart', {})
         # Agregar el producto al carrito o actualizar la cantidad si ya está en el carrito
         if delete_product_id in cart:
-            print('-----------------------------------85----')
-            print(cart[delete_product_id]['quantity'])
+           
             product.quantity+=cart[delete_product_id]['quantity']
             product.save()
             cart.pop(delete_product_id, None)
@@ -109,7 +121,6 @@ class AddCanvasShoppingCart(View):
         # Obtener el carrito de compras actual del usuario
         cart = request.session.get('cart', {})
         # Agregar el producto al carrito o actualizar la cantidad si ya está en el carrito
-        print(product.quantity)
         if product_id in cart:
             cart[product_id]['quantity'] += 1
             product.quantity-=1
@@ -125,8 +136,6 @@ class AddCanvasShoppingCart(View):
             product.quantity-=1
             product.save()
         request.session['cart'] = cart
-        print('-----------------22222222-----------')
-        print(product.quantity)
         cartS= request.GET.get('cart')
         if cartS=='cart':
             return redirect('almacen:body_cart')
@@ -338,8 +347,6 @@ class IndexAdminView(ListView):
         paginator = Paginator(self.queryset, self.paginate_by)
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        print(page_number)
-        print(page_obj)
         context['page_obj'] = page_obj
         
         return context
@@ -408,9 +415,14 @@ class AdminProductView(View):
         product_id= request.GET.get('product_id')
         product= ProductInformation.objects.get(pk=product_id)
         cantProductsShopping=dictionari_shopping()
-        cantProducts = int(cantProductsShopping[product_id]) 
-        total_amount=amount_id(product_id)
-        total_amount=total_amount[product_id]
+        if(product_id in cantProductsShopping):
+            cantProducts = int(cantProductsShopping[product_id]) 
+            total_amount=amount_id(product_id)
+            total_amount=total_amount[product_id]
+        else:
+            cantProducts=0
+            total_amount=0
+        
         return render(request, self.template_name, {'product':product,'cantProducts':cantProducts,'total_amount':total_amount})
 
 @method_decorator(login_required, name='dispatch')    

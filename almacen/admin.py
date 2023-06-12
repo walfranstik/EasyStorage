@@ -14,7 +14,7 @@ class ProductImageAdmin(admin.ModelAdmin):
 
 @admin.register(ProductInformation)
 class ProductInformationAdmin(admin.ModelAdmin):
-    list_display = ('reference_product','name_product','description_product','price_false','price_product')
+    list_display = ('id','reference_product','name_product','description_product','price_false','price_product')
 
 @admin.register(Provider)
 class TypeWalletAdmin(admin.ModelAdmin):
