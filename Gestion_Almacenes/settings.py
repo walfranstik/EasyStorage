@@ -59,7 +59,34 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+JAZZMIN_SETTINGS = {
 
+    
+    "site_title": "EasyStorage Admin",
+
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "EasyStorage",
+
+    # Title on the brand (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_brand": "EasyStorage",
+    "copyright": "EasyStorage Ltd",
+
+
+     "topmenu_links": [
+
+        
+
+        # Nos muestra las vistas del admin
+        {"name": "Dashboard-Products", "url": "almacen:index_admin", "new_window": False},
+
+        
+    ],
+     "usermenu_links": [
+        {"name": "Dashboard-Products", "url": "almacen:index_admin", "new_window": False},
+    ],
+
+
+}
 
 
 ROOT_URLCONF = 'Gestion_Almacenes.urls'

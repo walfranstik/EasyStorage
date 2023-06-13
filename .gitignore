@@ -3,5 +3,15 @@
 db.sqlite3
 media/*
 locale/**/**/.mo
-
-
+env/*
+.venv
+.vscode
+my_env_project
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
