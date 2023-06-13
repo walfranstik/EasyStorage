@@ -26,7 +26,7 @@ class Category(models.Model):
         return self.name
 class Provider(models.Model):
     name = models.CharField(max_length=50,help_text=("Input category name"))
-    address = models.CharField(max_length=50, verbose_name=_('Address'), help_text=_('Input Address '), blank=True)
+    address = models.CharField(max_length=200, verbose_name=_('Address'), help_text=_('Input Address '), blank=True)
     phone_number = models.CharField(max_length=20, verbose_name=_('Phone number'), help_text=_('Input Phone number'), blank=False,default="")
     email = models.EmailField(verbose_name=_("email address"), help_text=_("Input email address."))
 
@@ -35,8 +35,8 @@ class Provider(models.Model):
 
 class ProductInformation(models.Model):
     
-    reference_product= models.CharField(max_length=100, verbose_name=_('Product reference'), help_text=_('Input Product reference'), blank=False)
-    name_product = models.CharField(max_length=100, verbose_name=_('Product name'), help_text=_('Input Product name'), blank=False)
+    reference_product= models.CharField(max_length=200, verbose_name=_('Product reference'), help_text=_('Input Product reference'), blank=False)
+    name_product = models.CharField(max_length=200, verbose_name=_('Product name'), help_text=_('Input Product name'), blank=False)
     description_product= models.TextField(verbose_name=_('Product description'), help_text=_('Input Product description'), blank=False)
     buy_price = models.DecimalField(max_digits=16, decimal_places=6, verbose_name=_('Buy Price of the product'), help_text=_('Input Buy Price of the product'),
                                            blank=False, default=0)
@@ -61,7 +61,7 @@ class Venta(models.Model):
     first_name = models.CharField(max_length=50, verbose_name=_('First name'), help_text=_('Input First name'), blank=False,default="")
     last_name = models.CharField(max_length=50, verbose_name=_('Last name'), help_text=_('Input Last name'), blank=False,default="")
     phone_number = models.CharField(max_length=20, verbose_name=_('Phone number'), help_text=_('Input Phone number'), blank=False,default="")
-    address = models.CharField(max_length=50, verbose_name=_('Address'), help_text=_('Input Address '), blank=False)
+    address = models.CharField(max_length=400, verbose_name=_('Address'), help_text=_('Input Address '), blank=False)
     status = models.CharField(max_length=20, choices=StatusChoices.choices, verbose_name=('Status'), help_text=('Input Status'), default=StatusChoices.WAITING_FOR_APPROVAL, blank=False)
     articles = models.TextField(verbose_name=_('Articles'), help_text=_('Input Articles'), blank=False,default="")
     date_of_purchase = models.DateField(verbose_name=_("Date of purchase"),auto_now_add=True, help_text=_("The date on which the transaction was made."))
