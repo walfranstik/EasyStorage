@@ -59,13 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-JAZZMIN_SETTINGS = {
-    'site_header': 'EasyStorage Admin',
-    'site_title': 'EasyStorage Administración',
-    
 
-
-}
 
 
 ROOT_URLCONF = 'Gestion_Almacenes.urls'
