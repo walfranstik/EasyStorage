@@ -29,8 +29,7 @@ SECRET_KEY = 'django-insecure-by1zgg+)#e#60gnh!@ij*v33ejh+tf6b@b6%t^8z@y(hsa(ch+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -115,8 +114,12 @@ WSGI_APPLICATION = 'Gestion_Almacenes.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'easystorage_db',
+        'USER': '311224',
+        'PASSWORD': 'Andres123k,l',
+        'HOST': 'mysql-easystorage.alwaysdata.net',  # Nombre del servicio de MySQL en Docker Compose
+        'PORT': '3306',
     }
 }
 
@@ -176,8 +179,10 @@ LOGIN_REDIRECT_URL = 'almacen:dashboard'
 LOGOUT_REDIRECT_URL = 'almacen:login'
 
 LOGIN_URL = 'almacen:login'
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+

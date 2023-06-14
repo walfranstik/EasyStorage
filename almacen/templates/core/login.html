@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block title %}
-login
+Inicio de sesión
 {% endblock title %}
 
 
@@ -16,6 +16,7 @@ login
     }
     
     .twitter-login-box {
+	    flex-direction: column;
         background-color: var(--primary-color-rebaja);
         border-radius: 5px;
         padding: 20px;
@@ -86,28 +87,28 @@ login
 <body class="login-page">
     <div class="twitter-login-box d-flex justify-content-center align-items-center" style="margin: auto;">
         <header>
-            <img src=" {{settings.logo.url}} " height="100px" width="110px" alt="EasyStorage logo">
+            <img src=" {{settings.logo.url}} " height="80" alt="EasyStorage logo">
             <h1>Inicia Sesión</h1>
         </header>
 
         <form method="post">
             {% csrf_token %}
             <div class="input-wrapper">
-                <label for="user-name-id">Username</label>
+                <label for="user-name-id">Usuario</label>
                 {{ form.username }}
             </div>
 
             <div class="input-wrapper">
-                <label for="password-id">Password</label>
+                <label for="password-id">Contraseña</label>
                 {{ form.password }}
             </div>
             {% if form.errors %}
-            <p style="color: red;">Username or password not correct.</p>
+            <p style="color: red;">Usuario o contraseña incorrectas!</p>
             {% endif %}
 
       
 
-            <button class="twitter-btn">Log in</button>
+            <button class="twitter-btn">Iniciar</button>
         </form>
 
         <div class="footer">
